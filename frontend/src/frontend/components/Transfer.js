@@ -8,12 +8,12 @@ const Transfer = ({ addresscon, DaiAbi }) => {
     const [amounts, setAmount] = useState([]);
     const [_from, setAdd] = useState([]);
     const [_to, setAdd2] = useState([]);
-    const getWithdraw = async (e) => {
+    const getTransfer = async (e) => {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         await provider.send("eth_requestAccounts", []);
         const signer = await provider.getSigner();
         const erc20 = new ethers.Contract(addresscon, DaiAbi, signer);
-        await erc20.withdraw(_from, _to, amounts);
+        await erc20.bankTransfer(_from, _to, amounts);
     };
 
     function handleChangeAmount(event) {
@@ -88,11 +88,11 @@ const Transfer = ({ addresscon, DaiAbi }) => {
                             <Card.Footer>
                                 <div className='d-grid'>
                                     <Button
-                                        onClick={getWithdraw}
+                                        onClick={getTransfer}
                                         type="submit"
                                         variant="primary" size="lg"
                                     >
-                                        Withdraw
+                                        Transfer
                                     </Button>
                                 </div>
                             </Card.Footer>
